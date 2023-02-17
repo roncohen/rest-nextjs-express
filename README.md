@@ -18,34 +18,34 @@ Navigate to the project:
 cd rest-nextjs-express
 ```
 
-#### Install npm dependencies:
+#### Install dependencies:
 
 Install dependencies for your [`backend`](./backend). Open a terminal window and install the `backend`'s dependencies
 
 ```bash
 cd backend
-npm install
+yarn
 ```
 
 Open a separate terminal window and navigate to your [`frontend`](./frontend) directory and install its dependencies
 
 ```bash
 cd frontend
-npm install
+yarn
 ```
 
 ### 2. Create and seed the database (backend)
 
-On the terminal window used to install the backend npm dependencies, run the following command to create your SQLite database file. This also creates the `User` and `Post` tables that are defined in [`prisma/schema.prisma`](./backend/prisma/schema.prisma):
+On the terminal window used to install the backend dependencies, run the following command to create your SQLite database file. This also creates the `User` and `Post` tables that are defined in [`prisma/schema.prisma`](./backend/prisma/schema.prisma):
 
 ```
-npx prisma migrate dev --name init
+yarn prisma migrate dev --name init
 ```
 
 Now, seed the database with the sample data in [`prisma/seed.ts`](./backend/prisma/seed.ts) by running the following command:
 
 ```
-npx prisma db seed
+yarn prisma db seed
 ```
 
 ### 3. Start the server (backend)
@@ -53,17 +53,17 @@ npx prisma db seed
 On the same terminal used in step 2, run the following command to start the server:
 
 ```bash
-npm run dev
+yarn run dev
 ```
 
 The server is now running at [`http://localhost:3001/`](http://localhost:3001/).
 
 ### 4. Start the app (frontend)
 
-On the terminal window used to install frontend npm dependencies, run the following command to start the app:
+On the terminal window used to install frontend dependencies, run the following command to start the app:
 
 ```bash
-npm run dev
+yarn run dev
 ```
 
 The app is now running, navigate to [`http://localhost:3000/`](http://localhost:3000/) in your browser to explore its UI.
@@ -121,9 +121,8 @@ You can also access the REST API of the API server directly. It is running [`loc
 - `/api/publish/:id`: Publish a post by its `id`
 
 ### `DELETE`
-  
-- `/api/post/:id`: Delete a post by its `id`
 
+- `/api/post/:id`: Delete a post by its `id`
 
 ## Evolving the app
 
@@ -152,8 +151,8 @@ model Post {
 }
 
 model User {
-  id      Int      @default(autoincrement()) @id 
-  name    String? 
+  id      Int      @default(autoincrement()) @id
+  name    String?
   email   String   @unique
   posts   Post[]
 + profile Profile?
@@ -170,7 +169,7 @@ model User {
 Once you've updated your data model, you can execute the changes against your database with the following command:
 
 ```
-npx prisma migrate dev
+yarn prisma migrate dev
 ```
 
 ### 2. Update your application code
@@ -221,17 +220,15 @@ const userWithUpdatedProfile = await prisma.user.update({
 });
 ```
 
-
 ### 3. Build new UI features in React
 
 Once you have added a new endpoint to the API (e.g. `/api/profile` with `/POST`, `/PUT` and `GET` operations), you can start building a new UI component in React. It could e.g. be called `profile.tsx` and would be located in the `pages` directory.
 
 In the application code, you can access the new endpoint via `fetch` operations and populate the UI with the data you receive from the API calls.
 
-
 ## Switch to another database (e.g. PostgreSQL, MySQL, SQL Server, MongoDB)
 
-If you want to try this example with another database than SQLite, you can adjust the the database connection in [`prisma/schema.prisma`](./prisma/schema.prisma) by reconfiguring the `datasource` block. 
+If you want to try this example with another database than SQLite, you can adjust the the database connection in [`prisma/schema.prisma`](./prisma/schema.prisma) by reconfiguring the `datasource` block.
 
 Learn more about the different connection configurations in the [docs](https://www.prisma.io/docs/reference/database-reference/connection-urls).
 
@@ -298,6 +295,7 @@ datasource db {
   url      = "mongodb://USERNAME:PASSWORD@HOST/DATABASE?authSource=admin&retryWrites=true&w=majority"
 }
 ```
+
 Because MongoDB is currently in [Preview](https://www.prisma.io/docs/about/releases#preview), you need to specify the `previewFeatures` on your `generator` block:
 
 ```
@@ -306,6 +304,7 @@ generator client {
   previewFeatures = ["mongodb"]
 }
 ```
+
 </details>
 
 ## Next steps
